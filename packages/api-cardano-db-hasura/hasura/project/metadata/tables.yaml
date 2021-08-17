@@ -1,5 +1,5 @@
 - table:
-    schema: cexplorer
+    schema: public
     name: ActiveStake
   configuration:
     custom_root_fields:
@@ -11,7 +11,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Epoch
         column_mapping:
           epochNo: number
@@ -19,7 +19,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePool
         column_mapping:
           stakePoolHash: hash
@@ -36,7 +36,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: AdaPots
   select_permissions:
   - role: cardano-graphql
@@ -52,7 +52,7 @@
       filter: {}
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: Asset
   configuration:
     custom_root_fields:
@@ -67,7 +67,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Block
         column_mapping:
           firstAppearedInSlot: slotNo
@@ -76,7 +76,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TokenMint
         column_mapping:
           policyId: policyId
@@ -141,7 +141,7 @@
     permission:
       filter: {}
 - table:
-    schema: cexplorer
+    schema: public
     name: Block
   configuration:
     custom_root_fields:
@@ -153,7 +153,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Epoch
         column_mapping:
           epochNo: number
@@ -161,7 +161,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Block
         column_mapping:
           nextBlockHash: hash
@@ -169,7 +169,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Block
         column_mapping:
           previousBlockHash: hash
@@ -177,7 +177,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: SlotLeader
         column_mapping:
           slot_leader_id: id
@@ -186,7 +186,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           hash: blockHash
@@ -213,7 +213,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: Cardano
   configuration:
     custom_root_fields:
@@ -224,7 +224,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Epoch
         column_mapping:
           currentEpochNo: number
@@ -232,7 +232,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Block
         column_mapping:
           tipBlockNo: number
@@ -245,7 +245,7 @@
       filter: {}
       limit: 1
 - table:
-    schema: cexplorer
+    schema: public
     name: Delegation
   configuration:
     custom_root_fields:
@@ -257,7 +257,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePool
         column_mapping:
           pool_hash_id: hash_id
@@ -265,7 +265,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           tx_id: id
@@ -278,7 +278,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: Epoch
   configuration:
     custom_root_fields:
@@ -290,7 +290,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: AdaPots
         column_mapping:
           number: epochNo
@@ -298,7 +298,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: ShelleyEpochProtocolParams
         column_mapping:
           number: epoch_no
@@ -307,7 +307,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: ActiveStake
         column_mapping:
           number: epochNo
@@ -315,7 +315,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Block
         column_mapping:
           number: epochNo
@@ -335,7 +335,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: Reward
   configuration:
     custom_root_fields:
@@ -347,7 +347,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Epoch
         column_mapping:
           epochNo: number
@@ -355,7 +355,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePool
         column_mapping:
           pool_hash_id: hash_id
@@ -369,7 +369,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: ShelleyEpochProtocolParams
   select_permissions:
   - role: cardano-graphql
@@ -395,14 +395,14 @@
       filter: {}
       limit: 2500
 - table:
-    schema: cexplorer
+    schema: public
     name: SlotLeader
   object_relationships:
   - name: stakePool
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePool
         column_mapping:
           pool_hash_id: hash_id
@@ -416,7 +416,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: StakeDeregistration
   configuration:
     custom_root_fields:
@@ -428,7 +428,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           tx_id: id
@@ -441,7 +441,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: StakePool
   configuration:
     custom_root_fields:
@@ -453,7 +453,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           updated_in_tx_id: id
@@ -462,7 +462,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: ActiveStake
         column_mapping:
           hash: stakePoolHash
@@ -470,7 +470,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Block
         column_mapping:
           hash_id: pool_hash_id
@@ -478,7 +478,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Delegation
         column_mapping:
           hash_id: pool_hash_id
@@ -486,7 +486,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePoolOwner
         column_mapping:
           hash_id: pool_hash_id
@@ -502,7 +502,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePoolRetirement
         column_mapping:
           hash_id: pool_hash_id
@@ -510,7 +510,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Reward
         column_mapping:
           hash_id: pool_hash_id
@@ -530,14 +530,14 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: StakePoolOwner
   object_relationships:
   - name: stakePool
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePool
         column_mapping:
           hash: hash
@@ -550,14 +550,14 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: StakePoolRetirement
   object_relationships:
   - name: announcedIn
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           tx_id: id
@@ -565,7 +565,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Epoch
         column_mapping:
           inEffectFrom: transactionsCount
@@ -573,7 +573,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePool
         column_mapping:
           pool_hash_id: hash_id
@@ -586,7 +586,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: StakeRegistration
   configuration:
     custom_root_fields:
@@ -598,7 +598,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           tx_id: id
@@ -611,14 +611,14 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: TokenInOutput
   object_relationships:
   - name: asset
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Asset
         column_mapping:
           assetId: assetId
@@ -626,7 +626,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TransactionOutput
         column_mapping:
           tx_out_id: id
@@ -642,7 +642,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: TokenMint
   configuration:
     custom_root_fields:
@@ -654,7 +654,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Asset
         column_mapping:
           assetId: assetId
@@ -662,7 +662,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           tx_id: id
@@ -678,7 +678,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: Transaction
   configuration:
     custom_root_fields:
@@ -690,7 +690,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Block
         column_mapping:
           blockHash: hash
@@ -699,7 +699,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TransactionInput
         column_mapping:
           hash: txHash
@@ -715,7 +715,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TokenMint
         column_mapping:
           id: tx_id
@@ -723,7 +723,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TransactionOutput
         column_mapping:
           hash: txHash
@@ -731,7 +731,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Withdrawal
         column_mapping:
           id: tx_id
@@ -753,14 +753,14 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: TransactionInput
   object_relationships:
   - name: sourceTransaction
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           sourceTxHash: hash
@@ -768,7 +768,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           txHash: hash
@@ -777,7 +777,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TokenInOutput
         column_mapping:
           source_tx_out_id: tx_out_id
@@ -794,14 +794,14 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: TransactionOutput
   object_relationships:
   - name: transaction
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           txHash: hash
@@ -810,7 +810,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TokenInOutput
         column_mapping:
           id: tx_out_id
@@ -826,7 +826,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: Utxo
   configuration:
     custom_root_fields:
@@ -838,7 +838,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           txHash: hash
@@ -847,7 +847,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: TokenInOutput
         column_mapping:
           id: tx_out_id
@@ -863,7 +863,7 @@
       limit: 2500
       allow_aggregations: true
 - table:
-    schema: cexplorer
+    schema: public
     name: Withdrawal
   configuration:
     custom_root_fields:
@@ -875,7 +875,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           tx_id: id
@@ -901,7 +901,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: StakePool
         column_mapping:
           update_id: update_id
@@ -943,7 +943,7 @@
     using:
       manual_configuration:
         remote_table:
-          schema: cexplorer
+          schema: public
           name: Transaction
         column_mapping:
           tx_id: id
