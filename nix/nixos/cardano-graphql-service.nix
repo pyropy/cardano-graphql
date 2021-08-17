@@ -150,6 +150,9 @@ in {
       mkdir -p ~/.hasura/plugins/store/cli-ext/v${hasura-cli-ext.version}
       ln -s ${hasura-cli-ext}/bin/cli-ext-hasura-linux ~/.hasura/plugins/store/cli-ext/v${hasura-cli-ext.version}/cli-ext-hasura-linux
     '';
+    createSchema = pkgs.writeScript "cexplorer_schema.sql" ''
+      CREATE SCHEMA IF NOT EXISTS cexplorer;
+    '';
   in lib.mkIf cfg.enable {
     systemd.services.cardano-graphql = {
       wantedBy = [ "multi-user.target" ];
@@ -187,6 +190,7 @@ in {
       preStart = ''
         set -exuo pipefail
         ${installHasuraCLI}
+        psql ${cfg.db} < ${createSchema}
       '';
       script = ''
         exec cardano-graphql

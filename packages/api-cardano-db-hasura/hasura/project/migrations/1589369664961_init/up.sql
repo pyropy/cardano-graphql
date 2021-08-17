@@ -1,5 +1,5 @@
 
-CREATE VIEW "AdaPots" AS
+CREATE VIEW cexplorer."AdaPots" AS
   SELECT
     epoch_no AS "epochNo",
     deposits,
@@ -11,7 +11,7 @@ CREATE VIEW "AdaPots" AS
     utxo
 FROM ada_pots;
 
-CREATE TABLE IF NOT EXISTS "Asset" (
+CREATE TABLE IF NOT EXISTS cexplorer."Asset" (
     "assetId" BYTEA PRIMARY KEY,
     "assetName" BYTEA,
     "decimals" INT,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS "Asset" (
     "url" VARCHAR(250)
 );
 
-CREATE VIEW "Block" AS
+CREATE VIEW cexplorer."Block" AS
  SELECT (COALESCE(( SELECT sum((tx.fee)::bigint) AS sum
            FROM tx
           WHERE (tx.block_id = block.id)), (0)::NUMERIC))::bigint AS fees,
@@ -50,7 +50,7 @@ CREATE VIEW "Block" AS
      LEFT JOIN block next_block ON ((next_block.previous_id = block.id)))
      LEFT JOIN slot_leader ON ((block.slot_leader_id = slot_leader.id)));
 
-CREATE OR REPLACE VIEW "Cardano" AS
+CREATE OR REPLACE VIEW cexplorer."Cardano" AS
  SELECT block.block_no AS "tipBlockNo",
     block.epoch_no AS "currentEpochNo"
    FROM block
@@ -58,7 +58,7 @@ CREATE OR REPLACE VIEW "Cardano" AS
   ORDER BY block.block_no DESC
  LIMIT 1;
 
-CREATE VIEW "Delegation" AS
+CREATE VIEW cexplorer."Delegation" AS
 SELECT
   delegation.id AS "id",
   stake_address.view AS "address",
@@ -67,7 +67,7 @@ SELECT
 FROM delegation
 JOIN stake_address on delegation.addr_id = stake_address.id;
 
-CREATE VIEW "Epoch" AS
+CREATE VIEW cexplorer."Epoch" AS
 SELECT
   epoch.fees AS "fees",
   epoch.out_sum AS "output",
@@ -80,7 +80,7 @@ SELECT
 FROM epoch
   LEFT JOIN epoch_param on epoch.no = epoch_param.epoch_no;
 
-CREATE VIEW "ShelleyEpochProtocolParams" AS
+CREATE VIEW cexplorer."ShelleyEpochProtocolParams" AS
 SELECT
   epoch_param.influence AS "a0",
   epoch_param.decentralisation AS "decentralisationParam",
@@ -102,7 +102,7 @@ SELECT
   epoch_param.treasury_growth_rate AS "tau"
 FROM epoch_param;
 
-CREATE VIEW "Reward" AS
+CREATE VIEW cexplorer."Reward" AS
 SELECT
   reward.amount,
   stake_address.view AS "address",
@@ -111,7 +111,7 @@ SELECT
 FROM reward
 JOIN stake_address on reward.addr_id = stake_address.id;
 
-CREATE VIEW "SlotLeader" AS
+CREATE VIEW cexplorer."SlotLeader" AS
 SELECT
   slot_leader.hash AS "hash",
   slot_leader.id AS "id",
@@ -119,7 +119,7 @@ SELECT
   slot_leader.pool_hash_id AS "pool_hash_id"
 FROM slot_leader;
 
-CREATE VIEW "StakeDeregistration" AS
+CREATE VIEW cexplorer."StakeDeregistration" AS
 SELECT
   stake_deregistration.id AS "id",
   stake_address.view AS "address",
@@ -127,7 +127,7 @@ SELECT
 FROM stake_deregistration
 JOIN stake_address on stake_deregistration.addr_id = stake_address.id;
 
-CREATE VIEW "StakePool" AS
+CREATE VIEW cexplorer."StakePool" AS
 WITH
   latest_block_times AS (
     SELECT pool.hash_id, max(block.time) AS blockTime
@@ -157,21 +157,21 @@ FROM pool_update AS pool
   JOIN stake_address on pool.reward_addr = stake_address.hash_raw
   JOIN pool_hash on pool_hash.id = pool.hash_id;
 
-CREATE VIEW "StakePoolOwner" AS
+CREATE VIEW cexplorer."StakePoolOwner" AS
 SELECT
   stake_address.hash_raw as "hash",
   pool_owner.pool_hash_id as "pool_hash_id"
 FROM pool_owner
   LEFT JOIN stake_address ON pool_owner.addr_id = stake_address.id;
 
-CREATE VIEW "StakePoolRetirement" AS
+CREATE VIEW cexplorer."StakePoolRetirement" AS
 SELECT
   retiring_epoch as "inEffectFrom",
   announced_tx_id as "tx_id",
   hash_id AS "pool_hash_id"
 FROM pool_retire;
 
-CREATE VIEW "StakeRegistration" AS
+CREATE VIEW cexplorer."StakeRegistration" AS
 SELECT
   stake_registration.id AS "id",
   stake_address.view AS "address",
@@ -179,7 +179,7 @@ SELECT
 FROM stake_registration
 JOIN stake_address on stake_registration.addr_id = stake_address.id;
 
-CREATE VIEW "ActiveStake" AS
+CREATE VIEW cexplorer."ActiveStake" AS
 SELECT
   stake_address.view AS "address",
   amount AS "amount",
@@ -192,7 +192,7 @@ JOIN pool_hash
   ON pool_hash.id = epoch_stake.pool_id
 JOIN stake_address on epoch_stake.addr_id = stake_address.id;
 
-CREATE VIEW "TokenMint" AS
+CREATE VIEW cexplorer."TokenMint" AS
 SELECT
   CAST(CONCAT(policy, RIGHT(CONCAT(E'\\', name), -3)) as BYTEA) as "assetId",
   name AS "assetName",
@@ -201,7 +201,7 @@ SELECT
   tx_id
 FROM ma_tx_mint;
 
-CREATE VIEW "TokenInOutput" AS
+CREATE VIEW cexplorer."TokenInOutput" AS
 SELECT
   CAST(CONCAT(policy, RIGHT(CONCAT(E'\\', name), -3)) as BYTEA) as "assetId",
   name as "assetName",
@@ -210,7 +210,7 @@ SELECT
   tx_out_id
 FROM ma_tx_out;
 
-CREATE VIEW "Transaction" AS
+CREATE VIEW cexplorer."Transaction" AS
 SELECT
   block.hash AS "blockHash",
   tx.block_index AS "blockIndex",
@@ -228,7 +228,7 @@ FROM
 INNER JOIN block
   ON block.id = tx.block_id;
 
-CREATE VIEW "TransactionInput" AS
+CREATE VIEW cexplorer."TransactionInput" AS
 SELECT
   source_tx_out.address,
   source_tx_out.value,
@@ -246,7 +246,7 @@ JOIN tx_out AS source_tx_out
 JOIN tx AS source_tx
   ON source_tx_out.tx_id = source_tx.id;
 
-CREATE VIEW "TransactionOutput" AS
+CREATE VIEW cexplorer."TransactionOutput" AS
 SELECT
   address,
   value,
@@ -257,7 +257,7 @@ FROM tx
 JOIN tx_out
   ON tx.id = tx_out.tx_id;
 
-CREATE VIEW "Utxo" AS SELECT
+CREATE VIEW cexplorer."Utxo" AS SELECT
   address,
   value,
   tx.hash AS "txHash",
@@ -271,7 +271,7 @@ LEFT OUTER JOIN tx_in
   AND tx_out.index = tx_in.tx_out_index
 WHERE tx_in.tx_in_id IS NULL;
 
-CREATE VIEW "Withdrawal" AS
+CREATE VIEW cexplorer."Withdrawal" AS
 SELECT
   withdrawal.amount AS "amount",
   withdrawal.id AS "id",
@@ -298,7 +298,7 @@ CREATE INDEX idx_tx_in_consuming_tx
 CREATE INDEX idx_tx_out_tx
     ON tx_out(tx_id);
 
-CREATE function utxo_set_at_block("hash" hash32type)
+CREATE function cexplorer.utxo_set_at_block("hash" hash32type)
 RETURNS SETOF "TransactionOutput" AS $$
   SELECT
     "TransactionOutput".address,
@@ -317,4 +317,3 @@ RETURNS SETOF "TransactionOutput" AS $$
   WHERE tx_in.tx_in_id IS NULL
   AND tx.block_id <= (SELECT id FROM block WHERE hash = "hash")
 $$ LANGUAGE SQL stable;
-
