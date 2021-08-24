@@ -23,7 +23,7 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-        
+
   cardano-node-ogmios:
     build:
       args:
@@ -42,7 +42,7 @@ services:
     volumes:
       - node-db:/db
       - node-ipc:/ipc
-    
+
   cardano-db-sync-extended:
     image: inputoutput/cardano-db-sync:${CARDANO_DB_SYNC_VERSION:-11.0.4}
     command: [
@@ -72,7 +72,7 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-        
+
   hasura:
     build:
       context: ./packages/api-cardano-db-hasura/hasura
@@ -94,6 +94,24 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
+
+  socket-tcp-listner:
+    build:
+      context: ./socket-tcp-listner
+    depends_on:
+      - cardano-node
+    environment:
+      - SOCKET_PATH=/node-ipc/node.socket
+    volumes:
+      - node-ipc:/node-ipc
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    ports:
+      - 3333:3333 # todo: make this over http
 
   cardano-graphql:
     build:
