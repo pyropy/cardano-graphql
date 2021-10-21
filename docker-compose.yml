@@ -98,8 +98,6 @@ services:
   socket-tcp-listner:
     build:
       context: ./socket-tcp-listner
-    depends_on:
-      - cardano-node
     environment:
       - SOCKET_PATH=/node-ipc/node.socket
     volumes:
@@ -111,7 +109,27 @@ services:
         max-size: "200k"
         max-file: "10"
     ports:
-      - 3333:3333 # todo: make this over http
+      - 3333:3333
+
+  socket-tcp-wrapper:
+    build:
+      context: ./socket-tcp-wrapper
+    command: [
+      "socat",
+      "UNIX-LISTEN:/ipc/node.socket,fork,reuseaddr,unlink-early,",
+      "TCP:socket-tcp-listner:3333"
+    ]
+    environment:
+      - CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
+      - SOCKET_TCP_ADDRESS=socket-tcp-listner:3333
+    volumes:
+      - ./ipc:/ipc
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   cardano-graphql:
     build:
